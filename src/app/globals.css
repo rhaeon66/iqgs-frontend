@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-igqs-ink: #10231c;
+  --color-igqs-green: #0f3d30;
+  --color-igqs-forest: #1a5c45;
+  --color-igqs-gold: #c4a35a;
+  --color-igqs-gold-soft: #e8d7a8;
+  --color-igqs-cream: #f7f2e8;
+  --color-igqs-sand: #efe6d4;
+  --color-igqs-muted: #5c6b64;
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-bengali: var(--font-noto-sans-bn), var(--font-outfit), sans-serif;
+  --font-bengali-display: var(--font-noto-serif-bn), serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-igqs-cream text-igqs-ink antialiased;
+}
+
+.dark body {
+  @apply bg-[#07140f] text-igqs-sand;
+}
+
+.font-bn {
+  font-family: var(--font-noto-sans-bn), var(--font-outfit), sans-serif;
+}
+
+.font-bn .font-display,
+.font-bn h1,
+.font-bn h2,
+.font-bn h3 {
+  font-family: var(--font-noto-serif-bn), serif;
+}
+
+.pattern-bg {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(196 163 90 / 0.12), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgb(15 61 48 / 0.12), transparent 32%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 2 L34 14 L46 18 L34 22 L30 34 L26 22 L14 18 L26 14 Z' fill='none' stroke='%23c4a35a' stroke-opacity='0.18' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+.dark .pattern-bg {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(196 163 90 / 0.08), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgb(26 92 69 / 0.18), transparent 32%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 2 L34 14 L46 18 L34 22 L30 34 L26 22 L14 18 L26 14 Z' fill='none' stroke='%23c4a35a' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+}

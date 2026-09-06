@@ -1,0 +1,80 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { staffRequest, type StaffStats } from "@/lib/staff";
+
+function StatCard({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="rounded-3xl border border-igqs-gold/25 bg-white p-5 dark:bg-[#0d1f18]">
+      <p className="text-xs uppercase tracking-[0.18em] text-igqs-gold">{label}</p>
+      <p className="mt-2 font-display text-3xl">{value}</p>
+    </div>
+  );
+}
+
+export function StaffDashboard() {
+  const t = useTranslations("staff");
+  const locale = useLocale();
+  const [stats, setStats] = useState<StaffStats | null>(null);
+
+  useEffect(() => {
+    staffRequest<StaffStats>("/api/admissions/staff/stats/").then(setStats);
+  }, []);
+
+  if (!stats) return <p className="text-sm text-igqs-muted">{t("loading")}</p>;
+
+  const money = (value: string) =>
+    `${stats.currency} ${Number(value).toLocaleString(locale === "bn" ? "bn-BD" : "en-GB")}`;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.28em] text-igqs-gold">{t("kicker")}</p>
+          <h1 className="mt-2 font-display text-4xl">{t("dashboard")}</h1>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/staff/content"
+            className="rounded-full border border-igqs-gold/40 px-5 py-2 text-sm"
+          >
+            {t("website")}
+          </Link>
+          <Link
+            href="/staff/applications"
+            className="rounded-full bg-igqs-green px-5 py-2 text-sm text-igqs-cream dark:bg-igqs-gold dark:text-igqs-ink"
+          >
+            {t("manageApplications")}
+          </Link>
+        </div>
+      </div>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label={t("total")} value={stats.total} />
+        <StatCard label={t("pending")} value={stats.pending} />
+        <StatCard label={t("approved")} value={stats.approved} />
+        <StatCard label={t("rejected")} value={stats.rejected} />
+        <StatCard label={t("today")} value={stats.today} />
+        <StatCard label={t("feeCollected")} value={money(stats.fee_collected)} />
+        <StatCard label={t("feePending")} value={money(stats.fee_pending)} />
+        <StatCard label={t("feeSubmitted")} value={money(stats.fee_submitted)} />
+      </div>
+      <div className="mt-10 rounded-3xl border border-igqs-gold/25 bg-white p-6 dark:bg-[#0d1f18]">
+        <h2 className="font-display text-2xl">{t("byClass")}</h2>
+        {stats.by_class.length === 0 ? (
+          <p className="mt-4 text-sm text-igqs-muted">{t("noApplications")}</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-igqs-gold/15">
+            {stats.by_class.map((row) => (
+              <li key={row.applying_class} className="flex justify-between py-3 text-sm">
+                <span>{row.applying_class}</span>
+                <strong>{row.total}</strong>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
