@@ -33,6 +33,9 @@ const notoSerifBn = Noto_Serif_Bengali({
   variable: "--font-noto-serif-bn",
 });
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

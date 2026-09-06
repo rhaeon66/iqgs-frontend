@@ -8,7 +8,10 @@ export function apiUrl(path: string, locale?: string) {
 
 export async function apiGet<T>(path: string, locale: string): Promise<T | null> {
   try {
-    const res = await fetch(apiUrl(path, locale), { next: { revalidate: 10 } });
+    const res = await fetch(apiUrl(path, locale), {
+      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+    });
     if (!res.ok) return null;
     return (await res.json()) as T;
   } catch {
