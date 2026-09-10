@@ -34,7 +34,7 @@ export function Logo({
           >
             {t("name")}
           </span>
-          <span className="mt-1 hidden text-[11px] uppercase tracking-[0.18em] text-igqs-gold sm:block">
+          <span className="eyebrow mt-1 hidden text-[11px] sm:block">
             {t("tagline")}
           </span>
         </span>

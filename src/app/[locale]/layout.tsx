@@ -1,4 +1,4 @@
-import { Cormorant_Garamond, Noto_Sans_Bengali, Noto_Serif_Bengali, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Hind_Siliguri, Noto_Serif_Bengali, Outfit } from "next/font/google";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -23,9 +23,10 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
 });
 
-const notoSansBn = Noto_Sans_Bengali({
-  subsets: ["bengali"],
-  variable: "--font-noto-sans-bn",
+const hindSiliguri = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-hind-siliguri",
 });
 
 const notoSerifBn = Noto_Serif_Bengali({
@@ -71,7 +72,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
       <body
-        className={`${outfit.variable} ${cormorant.variable} ${notoSansBn.variable} ${notoSerifBn.variable} ${
+        className={`${outfit.variable} ${cormorant.variable} ${hindSiliguri.variable} ${notoSerifBn.variable} ${
           locale === "bn" ? "font-bn" : "font-sans"
         }`}
       >
