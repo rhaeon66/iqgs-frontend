@@ -1,4 +1,6 @@
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
+const API =
+  process.env.NEXT_PUBLIC_API_URL ??
+  (process.env.VERCEL ? "https://igqs.orbeetal.com" : "http://127.0.0.1:8000");
 
 export function apiUrl(path: string, locale?: string) {
   const url = new URL(path, API);
